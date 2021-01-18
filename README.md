@@ -22,10 +22,15 @@ Good at epistemic uncertainty, but somewhat underestimate the uncertainty. Not v
 <img src="images/NN_dropout.png">
 Valid for epistemic uncertainty, but not good.
 
--  Density network
+-  Single density network
 <img src="images/density.png">
 Valid only for aleatoric uncertainty. Unstable in traning process due to negative log-likelihood loss.
 
+- Density + dropout
+- Density + ensemble
+- Mixture density network
+
 ## References
 * Bayesiean NN based on dropout: https://arxiv.org/pdf/1703.04977.pdf
+* Deep ensemble density network: https://papers.nips.cc/paper/2017/file/9ef2ed4b7fd2c810847ffa5fa85bce38-Paper.pdf
 * Gaussian process regression Code from Sungjoon Choi(https://github.com/sjchoi86)
