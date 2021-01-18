@@ -6,24 +6,25 @@ class RegressionTrainer(object) :
     def __init__(self,name) :
         self.name = name
 
-    def train_model(self,model,criterion,optimizer,scheduler,num_epochs,dataloaders,is_cuda=False) :
+    def train_model(self,model,criterion,optimizer,scheduler,num_epochs,dataloaders,is_cuda=False, verbose=True) :
         since = time.time()
         best_model_wts = model.state_dict()
         best_loss = 1e8
         for epoch in range(num_epochs) :
-            if epoch // 100 == 0 :
-                verbose = True
+            if epoch % 100 == 0 and verbose == True:
+                vbs = True
             else : 
-                verbose = False
-            if  verbose == True :
+                vbs = False
+            if  vbs == True :
                 print('Epoch {}/{}'.format(epoch, num_epochs - 1))
                 print('-' * 10)
-            train_loss = self.fit('train',epoch,model,criterion,optimizer,dataloaders['train'],is_cuda,verbose)
-            valid_loss = self.fit('valid',epoch,model,criterion,optimizer,dataloaders['valid'],is_cuda,verbose)
+            train_loss = self.fit('train',epoch,model,criterion,optimizer,dataloaders['train'],is_cuda,vbs)
+            valid_loss = self.fit('valid',epoch,model,criterion,optimizer,dataloaders['valid'],is_cuda,vbs)
             if valid_loss < best_loss :
                 best_mode_wts = model.state_dict()
                 best_loss = valid_loss
-            print()
+            if vbs == True :
+                print()
         time_elapsed = time.time() - since
         print('Training complete in {:.0f}m {:.0f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
@@ -47,7 +48,7 @@ class RegressionTrainer(object) :
                 optimizer.zero_grad()
 
             y_pred = model(x)
-            loss = (y_pred,y)
+            loss = criterion(y_pred,y)
             
             running_loss += loss.data
 
