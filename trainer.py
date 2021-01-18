@@ -11,10 +11,15 @@ class RegressionTrainer(object) :
         best_model_wts = model.state_dict()
         best_loss = 1e8
         for epoch in range(num_epochs) :
-            print('Epoch {}/{}'.format(epoch, num_epochs - 1))
-            print('-' * 10)
-            train_loss = self.fit('train',epoch,model,criterion,optimizer,dataloaders['train'],is_cuda)
-            valid_loss = self.fit('valid',epoch,model,criterion,optimizer,dataloaders['valid'],is_cuda)
+            if epoch // 100 == 0 :
+                verbose = True
+            else : 
+                verbose = False
+            if  verbose == True :
+                print('Epoch {}/{}'.format(epoch, num_epochs - 1))
+                print('-' * 10)
+            train_loss = self.fit('train',epoch,model,criterion,optimizer,dataloaders['train'],is_cuda,verbose)
+            valid_loss = self.fit('valid',epoch,model,criterion,optimizer,dataloaders['valid'],is_cuda,verbose)
             if valid_loss < best_loss :
                 best_mode_wts = model.state_dict()
                 best_loss = valid_loss
@@ -27,7 +32,7 @@ class RegressionTrainer(object) :
         model.load_state_dict(best_model_wts)
         return model
 
-    def fit(self,phase,epoch,model,criterion,optimizer,data_loader,is_cuda) :
+    def fit(self,phase,epoch,model,criterion,optimizer,data_loader,is_cuda,verbose=True) :
         if phase == 'train':
             model.train()
         if phase == 'validation':
@@ -42,7 +47,7 @@ class RegressionTrainer(object) :
                 optimizer.zero_grad()
 
             y_pred = model(x)
-            loss = criterion(y_pred,y)
+            loss = (y_pred,y)
             
             running_loss += loss.data
 
@@ -51,7 +56,8 @@ class RegressionTrainer(object) :
                 optimizer.step()
         
         epoch_loss = running_loss.item()/len(data_loader.dataset)
-        print('{} loss is {:.4f}'.format(phase, epoch_loss)) 
+        if verbose == True :
+            print('{} loss is {:.4f}'.format(phase, epoch_loss)) 
         return epoch_loss
 
 
@@ -59,7 +65,7 @@ class RegDensityTrainer(RegressionTrainer) :
     def __init__(self,name) :
         super().__init__(name)
 
-    def fit(self,phase,epoch,model,criterion,optimizer,data_loader,is_cuda) :
+    def fit(self,phase,epoch,model,criterion,optimizer,data_loader,is_cuda,verbose=True) :
         if phase == 'train':
             model.train()
         if phase == 'validation':
@@ -83,7 +89,8 @@ class RegDensityTrainer(RegressionTrainer) :
                 optimizer.step()
         
         epoch_loss = running_loss.item()/len(data_loader.dataset)
-        print('{} loss is {:.4f}'.format(phase, epoch_loss)) 
+        if verbose == True :
+            print('{} loss is {:.4f}'.format(phase, epoch_loss)) 
         return epoch_loss
 
 
