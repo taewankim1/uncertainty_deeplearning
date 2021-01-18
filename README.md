@@ -33,4 +33,5 @@ Valid only for aleatoric uncertainty. Unstable in traning process due to negativ
 ## References
 * Bayesiean NN based on dropout: https://arxiv.org/pdf/1703.04977.pdf
 * Deep ensemble density network: https://papers.nips.cc/paper/2017/file/9ef2ed4b7fd2c810847ffa5fa85bce38-Paper.pdf
+* Mixture density network: https://arxiv.org/pdf/1709.02249.pdf
 * Gaussian process regression Code from Sungjoon Choi(https://github.com/sjchoi86)
