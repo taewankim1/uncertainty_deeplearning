@@ -25,3 +25,7 @@ Valid for epistemic uncertainty, but not good.
 -  Density network
 <img src="images/density.png">
 Valid only for aleatoric uncertainty. Unstable in traning process due to negative log-likelihood loss.
+
+## References
+* Bayesiean NN based on dropout: https://arxiv.org/pdf/1703.04977.pdf
+* Gaussian process regression Code from Sungjoon Choi(https://github.com/sjchoi86)
