@@ -8,7 +8,7 @@ Two types uncertainty in training data.
 
 -  GP regression
 <img src="images/GP.png">
-Good at epistemic uncertainty. Not valid for aleatoric uncertainty.
+Good at epistemic uncertainty. Not valid for aleatoric uncertainty. Note that there is a variation of GP regression for heteroscedastic data. Check the reference. 
 
 -  Neural net
 <img src="images/NN.png">
@@ -35,3 +35,4 @@ Valid only for aleatoric uncertainty. Unstable in traning process due to negativ
 * Deep ensemble density network: https://papers.nips.cc/paper/2017/file/9ef2ed4b7fd2c810847ffa5fa85bce38-Paper.pdf
 * Mixture density network: https://arxiv.org/pdf/1709.02249.pdf
 * Gaussian process regression Code from Sungjoon Choi(https://github.com/sjchoi86)
+* Gaussian process for heteroscedastic data (https://cs.stanford.edu/~quocle/LeSmoCan05.pdf)
